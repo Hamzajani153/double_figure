@@ -1,5 +1,6 @@
 'use client'
 
+import { CircleHelp, LockKeyhole } from 'lucide-react'
 import type { PaymentMethod } from '@/src/types'
 
 type CheckoutPaymentDetailsProps = {
@@ -27,15 +28,39 @@ export function BankAccountDetails({ title = 'Bank account details (demo)' }: { 
   )
 }
 
+export function CardBrandBadges() {
+  return (
+    <span className="card-brand-badges" role="img" aria-label="Visa, Mastercard, and American Express">
+      <span className="card-brand-visa" aria-hidden="true">VISA</span>
+      <span className="card-brand-mastercard" aria-hidden="true"><i /><i /></span>
+      <span className="card-brand-amex" aria-hidden="true">AM<br />EX</span>
+    </span>
+  )
+}
+
+function CreditCardFieldsPreview() {
+  const securityCodeHelp = '3-digit security code usually found on the back of your card. American Express cards have a 4-digit code located on the front.'
+
+  return (
+    <>
+      <div className="card-fields-preview" aria-hidden="true">
+        <div className="card-field-preview">Card number <LockKeyhole size={15} /></div>
+        <div className="card-field-preview-row">
+          <div className="card-field-preview">Expiration date (MM / YY)</div>
+          <div className="card-field-preview" title={securityCodeHelp}>Security code <CircleHelp size={16} /></div>
+        </div>
+        <div className="card-field-preview">Name on card</div>
+      </div>
+      <p className="sr-only">Card number, expiration date, security code, and name on card fields are visual placeholders and do not accept input.</p>
+      <p className="payment-demo-note">Visual preview only. Card details are not collected, stored, or processed.</p>
+    </>
+  )
+}
+
 export function CheckoutPaymentDetails({ payment, codAgreed, onCodAgreementChange, codAgreementError }: CheckoutPaymentDetailsProps) {
   return (
     <div className="payment-details" aria-live="polite">
-      {payment === 'card' && (
-        <>
-          <p>The 3-digit security code is usually on the back of your card. American Express cards have a 4-digit code on the front.</p>
-          <p className="payment-demo-note">Card processing is not connected in this demo, and this form does not collect card details.</p>
-        </>
-      )}
+      {payment === 'card' && <CreditCardFieldsPreview />}
 
       {payment === 'bank_transfer' && (
         <>
