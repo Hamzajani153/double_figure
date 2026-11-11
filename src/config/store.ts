@@ -8,13 +8,9 @@ export const store = {
   colors: { background: '#FAFAF8', text: '#111111', accent: '#1F3D2B', border: '#e4e4df', sale: '#a33f38' },
   accent: '#1F3D2B',
   whatsappNumber: '923001234567',
+  saleEndsAt: '2026-12-31T23:59:59+05:00',
   freeShippingThreshold: 5000,
   shippingFee: 250,
-  announcementMessages: [
-    'Free delivery on orders over Rs. 5,000',
-    'Cash on delivery available',
-    'Easy size exchange',
-  ],
 }
 
 export const navigation = [

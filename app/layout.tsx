@@ -6,10 +6,10 @@ import { store } from '@/src/config/store'
 import type { CSSProperties } from 'react'
 
 export const metadata: Metadata = {
-  title: { default: `${store.name} — Everyday, well made`, template: `%s | ${store.name}` },
-  description: 'Modern everyday clothing for boys and young men. Discover relaxed hoodies, drop shoulder tees, shirts and t-shirts, delivered across Pakistan.',
+  title: { default: `${store.name} | Winter 2026 Collection`, template: `%s | ${store.name}` },
+  description: 'Shop heavyweight hoodies, relaxed tees and everyday layers at Double Figure. Discover the Winter 2026 collection, delivered across Pakistan.',
   applicationName: store.name,
-  openGraph: { title: store.name, description: 'Good clothes for growing into yourself.', type: 'website' },
+  openGraph: { title: `${store.name} | Winter 2026 Collection`, description: 'Heavyweight hoodies and easy layers, made for the cold.', type: 'website' },
 }
 
 export const viewport: Viewport = { colorScheme: 'light', themeColor: store.colors.background, width: 'device-width', initialScale: 1, maximumScale: 5 }
