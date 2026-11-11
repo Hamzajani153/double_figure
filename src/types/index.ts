@@ -64,17 +64,20 @@ export interface Address {
 
 export type OrderStatus = 'Placed' | 'Confirmed' | 'Packed' | 'Shipped' | 'Delivered'
 
+export type PaymentMethod = 'cod' | 'card' | 'bank_transfer'
+
 export interface Order {
   id: string
   customer: Customer
   items: CartItem[]
-  paymentMethod: 'cod' | 'card' | 'jazzcash' | 'easypaisa'
+  paymentMethod: PaymentMethod
   subtotal: number
   discount: number
   shipping: number
   total: number
   status: OrderStatus
   createdAt: string
+  notes?: string
 }
 
 export interface Promotion {

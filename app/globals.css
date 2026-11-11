@@ -350,6 +350,21 @@ main { min-height: 60vh; }
 .payment-card input { accent-color: var(--primary); }
 .payment-card strong { display: block; font-size: 11px; }
 .payment-card span { display: block; margin-top: 2px; color: var(--muted-foreground); font-size: 10px; }
+.payment-details { margin-top: 10px; padding: 16px; border: 1px solid var(--border); background: #f6f6f2; }
+.payment-details > p, .payment-instructions > p { margin: 0 0 10px; color: var(--muted-foreground); font-size: 11px; line-height: 1.65; }
+.payment-details a, .payment-instructions a { color: var(--foreground); text-decoration: underline; text-underline-offset: 2px; }
+.payment-demo-note { margin: 10px 0 0; color: var(--muted-foreground); font-size: 10px; line-height: 1.5; }
+.bank-account-details { margin-top: 14px; padding: 14px; border: 1px solid var(--border); background: white; }
+.bank-account-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 11px; }
+.demo-details-badge { color: var(--muted-foreground); font-size: 9px; text-transform: uppercase; letter-spacing: .06em; }
+.bank-account-details dl { display: grid; gap: 8px; margin: 13px 0 0; }
+.bank-account-details dl div { display: grid; grid-template-columns: minmax(85px, .7fr) minmax(0, 1.3fr); gap: 10px; font-size: 10px; }
+.bank-account-details dt { color: var(--muted-foreground); }
+.bank-account-details dd { margin: 0; text-align: right; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.cod-agreement { display: grid; grid-template-columns: 17px 1fr; gap: 10px; align-items: start; margin: 14px 0 6px; cursor: pointer; }
+.cod-agreement input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--primary); }
+.cod-agreement span { color: var(--foreground); font-size: 11px; line-height: 1.6; }
+.payment-instructions { background: #f6f6f2; }
 .otp-box { padding: 16px; background: #f1f1ed; }
 .otp-box h3 { margin: 0 0 6px; font-size: 13px; }
 .otp-box p { margin: 0 0 12px; color: #62635f; font-size: 10px; }
