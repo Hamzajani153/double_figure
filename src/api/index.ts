@@ -37,9 +37,9 @@ export async function getRecommendations(productId: string): Promise<Product[]> 
   return mockProducts.filter((product) => product.id !== productId && product.category === current?.category).slice(0, 4)
 }
 
-export async function createOrder(customer: Customer, items: CartItem[], paymentMethod: Order['paymentMethod'], totals: Pick<Order, 'subtotal' | 'discount' | 'shipping' | 'total'>): Promise<Order> {
+export async function createOrder(customer: Customer, items: CartItem[], paymentMethod: Order['paymentMethod'], totals: Pick<Order, 'subtotal' | 'discount' | 'shipping' | 'total'>, notes = ''): Promise<Order> {
   await Promise.resolve()
-  const order: Order = { id: `DF${Date.now().toString().slice(-8)}`, customer, items, paymentMethod, ...totals, status: 'Placed', createdAt: new Date().toISOString() }
+  const order: Order = { id: `DF${Date.now().toString().slice(-8)}`, customer, items, paymentMethod, ...totals, status: 'Placed', createdAt: new Date().toISOString(), ...(notes.trim() ? { notes: notes.trim() } : {}) }
   orders.set(order.id, order)
   return order
 }
