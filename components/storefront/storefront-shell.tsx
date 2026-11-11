@@ -8,40 +8,43 @@ import { navigation, footerGroups, store } from '@/src/config/store'
 import { useStore } from './store-provider'
 import { CartDrawer } from './cart-drawer'
 
-const messages = store.announcementMessages
-
 export function StorefrontShell({ children }: { children: React.ReactNode }) {
-  const [messageIndex, setMessageIndex] = useState(0)
   const [mobileMenu, setMobileMenu] = useState(false)
   const [consent, setConsent] = useState(true)
   const pathname = usePathname()
   const { cart, wishlist, openCart, toastMessage } = useStore()
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0)
-  const desktopNavigation = navigation.filter((item) => ['New In', 'Men', 'Sale'].includes(item.label))
-  const menCategories = navigation.filter((item) => !['New In', 'Men', 'Sale'].includes(item.label))
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setMessageIndex((current) => (current + 1) % messages.length), 4500)
-    return () => window.clearInterval(timer)
-  }, [])
-
-  function cycleMessage() {
-    setMessageIndex((current) => (current + 1) % messages.length)
-  }
+  const desktopNavigation = navigation.filter((item) => item.label !== 'Men')
+  const categoryLinks = navigation.filter((item) => ['Hoodies', 'Drop Shoulder', 'Shirts', 'T-Shirts'].includes(item.label))
+  const featuredLinks = [
+    { label: 'New In', href: '/collections/new-in' },
+    { label: 'Winter Edit', href: '/collections/winter' },
+    { label: 'Sale', href: '/collections/sale' },
+    { label: 'Shop All', href: '/collections/all' },
+  ]
+  const helpLinks = [
+    { label: 'Track your order', href: '/track-order' },
+    { label: 'FAQs', href: '/faq' },
+    { label: 'Returns and exchange', href: '/returns' },
+    { label: 'Size guide', href: '/size-guide' },
+  ]
 
   return (
     <>
-      <div className="announcement-bar">
-        <button type="button" aria-label="Show next store announcement" onClick={cycleMessage}>{messages[messageIndex]}</button>
-        <span aria-hidden="true">·</span>
-        <button type="button" onClick={cycleMessage}>Shop the latest <ArrowRight size={12} aria-hidden="true" /></button>
-      </div>
       <header className="site-header">
         <div className="header-main">
           <button className="icon-button mobile-menu-button" aria-label={mobileMenu ? 'Close menu' : 'Open menu'} onClick={() => setMobileMenu(!mobileMenu)}>{mobileMenu ? <X /> : <Menu />}</button>
           <Link className="brand-mark" href="/" aria-label={`${store.name} home`}><span className="brand-symbol" aria-hidden="true"><img className="brand-logo" src={store.logoSrc} alt="" /></span><span className="brand-name" aria-hidden="true"><span>DOUBLE</span><span>FIGURE</span></span></Link>
           <nav className="desktop-nav" aria-label="Main navigation">
-            {desktopNavigation.map((item) => <div className="nav-item" key={item.label}><Link href={item.href} aria-haspopup={item.label === 'Men' ? 'true' : undefined} className={pathname === item.href ? 'active' : ''}>{item.label}</Link>{item.label === 'Men' && <div className="mega-menu"><div><p className="eyebrow">SHOP MEN</p>{menCategories.slice(0, 4).map((category) => <Link key={category.label} href={category.href}>{category.label}</Link>)}</div><div><p className="eyebrow">MORE TO EXPLORE</p>{menCategories.slice(4).map((category) => <Link key={category.label} href={category.href}>{category.label}</Link>)}<Link href="/collections/new-in">New arrivals</Link><Link href="/collections/all">Shop everything</Link></div><Link className="mega-feature" href="/collections/new-in"><img src="/images/df-campaign.png" alt="" /><span>Made for the in-between <b>Explore new in →</b></span></Link></div>}</div>)}
+            {desktopNavigation.map((item) => <div className={`nav-item${item.label === 'New In' ? ' nav-item-new-in' : ''}`} key={item.label}>
+              <Link href={item.href} aria-haspopup={item.label === 'New In' ? 'true' : undefined} aria-controls={item.label === 'New In' ? 'new-in-menu' : undefined} className={pathname === item.href ? 'active' : ''}>{item.label}</Link>
+              {item.label === 'New In' && <div className="mega-menu" id="new-in-menu" aria-label="New In navigation">
+                <div><p className="eyebrow">Shop by category</p>{categoryLinks.map((category) => <Link key={category.label} href={category.href}>{category.label}</Link>)}</div>
+                <div><p className="eyebrow">Featured</p>{featuredLinks.map((link) => <Link key={link.label} href={link.href}>{link.label}</Link>)}</div>
+                <div><p className="eyebrow">Help</p>{helpLinks.map((link) => <Link key={link.label} href={link.href}>{link.label}</Link>)}</div>
+                <Link className="mega-feature" href="/collections/new-in"><img src="/images/df-campaign.png" alt="Two friends wearing relaxed neutral layers on a Lahore street" /><span>The new drop</span></Link>
+              </div>}
+            </div>)}
           </nav>
           <div className="header-actions">
             <Link href="/search" aria-label="Search products" className="icon-button"><Search /></Link>
@@ -52,6 +55,7 @@ export function StorefrontShell({ children }: { children: React.ReactNode }) {
         </div>
         {mobileMenu && <nav className="mobile-nav" aria-label="Mobile navigation">{navigation.map((item) => <Link key={item.label} href={item.href} onClick={() => setMobileMenu(false)}>{item.label}<ArrowRight size={15} /></Link>)}<Link href="/account" onClick={() => setMobileMenu(false)}>My account<ArrowRight size={15} /></Link></nav>}
       </header>
+      <AnnouncementBar />
       <main>{children}</main>
       <section className="newsletter-band" aria-labelledby="newsletter-heading">
         <div><p className="eyebrow">A NOTE FROM US</p><h2 id="newsletter-heading">Good things, occasionally.</h2><p>New drops, early access and a little something for your next order.</p></div>
@@ -65,12 +69,31 @@ export function StorefrontShell({ children }: { children: React.ReactNode }) {
         </div>
         <div className="footer-bottom"><span>© 2026 {store.name}. Made in Pakistan.</span><span>{store.currency} · Pakistan</span></div>
       </footer>
-      <a className="whatsapp-float" href={`https://wa.me/${store.whatsappNumber}`} target="_blank" rel="noreferrer" aria-label="Chat with Double Figure on WhatsApp"><span>WhatsApp</span><span className="whatsapp-glyph" aria-hidden="true">W</span></a>
+      <a className="whatsapp-float" href={`https://wa.me/${store.whatsappNumber}`} target="_blank" rel="noreferrer" aria-label="Chat with Double Figure on WhatsApp"><span>WhatsApp</span><span className="whatsapp-icon" aria-hidden="true"><img className="whatsapp-logo" src="/images/whatsapp.svg" alt="" width={24} height={24} /></span></a>
       {consent && <aside className="consent-banner" aria-label="Cookie preferences"><p>We use essential cookies to keep your bag and preferences. <Link href="/privacy-policy">Learn more</Link></p><div><button onClick={() => setConsent(false)}>Decline</button><button className="consent-accept" onClick={() => setConsent(false)}>Accept</button></div></aside>}
       {toastMessage && <div role="status" className="toast-message">{toastMessage}</div>}
       <CartDrawer />
     </>
   )
+}
+
+function AnnouncementBar() {
+  const target = new Date(store.saleEndsAt).getTime()
+  const [remaining, setRemaining] = useState(() => Math.max(0, target - Date.now()))
+
+  useEffect(() => {
+    const update = () => setRemaining(Math.max(0, target - Date.now()))
+    update()
+    const timer = window.setInterval(update, 1000)
+    return () => window.clearInterval(timer)
+  }, [target])
+
+  const days = Math.floor(remaining / 86400000)
+  const hours = Math.floor((remaining % 86400000) / 3600000)
+  const minutes = Math.floor((remaining % 3600000) / 60000)
+  const seconds = Math.floor((remaining % 60000) / 1000)
+
+  return <div className="announcement-bar" role="region" aria-label="Winter sale"><span className="announcement-offer">Winter Sale: Up to 30% off</span><span className="announcement-countdown" aria-live="off" suppressHydrationWarning>Ends in {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m {String(seconds).padStart(2, '0')}s</span><Link className="announcement-shop-link" href="/collections/sale">Shop the sale</Link></div>
 }
 
 function NewsletterForm() {

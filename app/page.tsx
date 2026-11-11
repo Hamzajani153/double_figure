@@ -12,9 +12,9 @@ import { HomeReviews } from '@/components/storefront/home-reviews'
 export default async function HomePage() {
   const products = await getProducts()
   return <>
-    <section className="hero" aria-label="Double Figure new collection">
-      <Image className="hero-image" src="/images/df-hero.png" alt="Young man wearing a relaxed charcoal hoodie in a warm, minimal studio" fill priority sizes="(max-width: 760px) calc(100vw - 20px), (max-width: 1440px) calc(100vw - 48px), 1440px" unoptimized={false} />
-      <div className="hero-copy"><p className="eyebrow">THE EVERYDAY EDIT · AUTUMN / WINTER 26</p><h1>Good clothes for growing into yourself.</h1><p>Easy layers. Considered fits. Made for all the in-between moments.</p><Link className="button button-light" href="/collections/new-in">Shop new arrivals <ArrowRight size={14} /></Link></div>
+    <section className="hero" aria-label="Double Figure winter 2026 collection">
+      <Image className="hero-image" src="/images/df-hero.png" alt="Young man wearing a heavyweight charcoal hoodie in a warm, minimal studio" fill priority sizes="100vw" unoptimized={false} />
+      <div className="hero-copy"><p className="eyebrow">WINTER 2026</p><h1>Heavyweight hoodies, made for the cold.</h1><Link className="button button-dark" href="/collections/hoodies">Shop hoodies</Link></div>
     </section>
 
     <FindYourFitMarquee />
