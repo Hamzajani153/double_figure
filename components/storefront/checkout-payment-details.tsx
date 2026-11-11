@@ -39,7 +39,7 @@ export function CheckoutPaymentDetails({ payment, codAgreed, onCodAgreementChang
 
       {payment === 'bank_transfer' && (
         <>
-          <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared. Your Order ID will appear after you place your order.</p>
+          <p>Make a direct bank transfer from your digital wallet to our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared. Your Order ID will appear after you place your order.</p>
           <p>After payment, share a screenshot as proof on WhatsApp only: <a href="https://wa.me/923335315527" target="_blank" rel="noreferrer">+92 333 5315527</a>. Thank you for your order.</p>
           <BankAccountDetails />
         </>

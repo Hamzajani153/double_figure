@@ -15,7 +15,7 @@ import type { PaymentMethod } from '@/src/types'
 const payments: { id: PaymentMethod; name: string; note: string }[] = [
   { id: 'cod', name: 'Cash on Delivery (COD)', note: 'Pay with cash upon delivery.' },
   { id: 'card', name: 'Credit card', note: 'Pay by credit or debit card.' },
-  { id: 'bank_transfer', name: 'Direct Bank Transfer', note: 'Transfer directly to our bank account.' },
+  { id: 'bank_transfer', name: 'Direct Bank Transfer', note: 'Transfer from your digital wallet to our bank account.' }
 ]
 
 export default function CheckoutPage() {
